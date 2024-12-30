@@ -18,6 +18,5 @@
 	bg-gradient-to-r from-primary to-secondary"
 >
 	<ThemeDropdown />
-	<ThemeToggle />
 	<slot />
 </div>
