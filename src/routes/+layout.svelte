@@ -3,8 +3,7 @@
 	import { onMount } from 'svelte';
 	import { inject } from '@vercel/analytics';
 	import { themeStore } from '$lib/store/theme';
-	import ThemeDropdown from '$lib/components/ThemeDropdown.svelte';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import ThemeDropdown from '$lib/components/theme/ThemeDropdown.svelte';
 
 	onMount(() => {
 		inject();

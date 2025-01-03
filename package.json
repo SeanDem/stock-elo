@@ -42,8 +42,9 @@
 	"type": "module",
 	"dependencies": {
 		"5": "^0.0.1",
+		"@types/node": "^22.10.2",
 		"@vercel/analytics": "^1.4.1",
-		"elo-rank": "^1.0.4",
+		"chart.js": "^4.4.7",
 		"postcss-import": "^16.1.0"
 	}
 }

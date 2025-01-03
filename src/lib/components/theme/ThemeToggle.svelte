@@ -1,5 +1,5 @@
 <script>
-	import { Theme, themeStore } from '$lib/store/theme';
+	import { Theme, themeStore } from '$lib/store/theme.js';
 	export let theme1 = Theme.Light;
 	export let theme2 = Theme.Dark;
 
