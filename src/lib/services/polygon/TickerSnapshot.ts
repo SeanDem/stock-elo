@@ -11,23 +11,6 @@ interface Aggregate {
 	n?: number;
 }
 
-interface LastTrade {
-	p: number;
-	s: number;
-	x: number;
-	c: number[];
-	t: number;
-	i?: string;
-}
-
-interface LastQuote {
-	p: number;
-	s: number;
-	P: number;
-	S: number;
-	t: number;
-}
-
 export interface TickerSnapshot {
 	ticker: string;
 	todaysChange: number;
@@ -43,14 +26,28 @@ interface SnapshotResponse {
 	status: string;
 	ticker: TickerSnapshot;
 }
+
 export async function fetchTickerSnapshot(ticker: string): Promise<TickerSnapshot | null> {
 	const url = `https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers/${ticker}?apiKey=${POLYGON_API_KEY}`;
+	const maxRetries = 10;
+	const retryDelay = 10;
 
-	const response = await fetch(url);
-	if (!response.ok) {
-		console.error(`Failed to fetch snapshot for ${ticker}:`, response.status, response.statusText);
-		return null;
+	for (let attempt = 1; attempt <= maxRetries; attempt++) {
+		const response = await fetch(url);
+		if (!response.ok) {
+			console.error(
+				`Failed to fetch snapshot for ${ticker}:`,
+				response.status,
+				response.statusText
+			);
+			return null;
+		}
+		const data: SnapshotResponse = await response.json();
+		return data.ticker;
+		// retry if failed
+		// await new Promise((resolve) => setTimeout(resolve, retryDelay));
 	}
-	const data: SnapshotResponse = await response.json();
-	return data.ticker;
+
+	console.error(`Failed to fetch valid snapshot for ${ticker} after ${maxRetries} attempts.`);
+	return null;
 }

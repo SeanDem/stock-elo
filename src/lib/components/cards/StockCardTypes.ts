@@ -3,6 +3,7 @@ import { POLYGON_API_KEY } from '$lib/env/polygon';
 import type { TickerPolygon } from '$lib/services/polygon';
 
 export interface StockCardData {
+	elo?: number;
 	name: string;
 	ticker: string;
 	logoUrl: string;
@@ -25,16 +26,17 @@ function calculateDividendYield(tickerDetails: TickerDetails): number {
 
 export function polygonDataToStockCardData(tickerDetails: TickerPolygon): StockCardData {
 	return {
+		elo: tickerDetails.elo,
 		name: tickerDetails.name,
 		ticker: tickerDetails.ticker,
 		logoUrl: `${tickerDetails.branding.icon_url}?apiKey=${POLYGON_API_KEY}`,
 		marketCap: tickerDetails.market_cap,
-		price: tickerDetails.day.c,
+		price: tickerDetails.day.c || tickerDetails.prevDay.c, //todo move up
 		description: tickerDetails.description || '',
 		homepageUrl: tickerDetails.homepage_url || '',
 		todaysChange: tickerDetails.todaysChange,
 		todaysChangePerc: tickerDetails.todaysChangePerc,
-		volume: tickerDetails.day.v,
+		volume: tickerDetails.day.v || tickerDetails.prevDay.v, //todo move up
 		sector: tickerDetails.sic_description || '',
 		dividendYield: calculateDividendYield(tickerDetails)
 	};

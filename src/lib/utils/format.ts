@@ -26,6 +26,11 @@ export class Format {
 		return numberFormatter.format(value);
 	}
 
+	static round(value: number | undefined, decimals: number = 0): string {
+		if (!value) return '';
+		return numberFormatter.format(Number(value.toFixed(decimals)));
+	}
+
 	static marketCap(value: number): string {
 		switch (true) {
 			case value >= 1_000_000_000_000:

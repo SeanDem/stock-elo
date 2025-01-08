@@ -1,8 +1,7 @@
 <script lang="ts">
 	import StockCard from '$lib/components/cards/StockCard.svelte';
 	import { invalidate, invalidateAll } from '$app/navigation';
-	import { updateElo } from '$lib/services/UpdateElo';
-	import { polygonDataToStockCardData } from '$lib';
+	import { polygonDataToStockCardData, updateElo } from '$lib';
 	let { data } = $props();
 
 	const stocks = $derived(
@@ -11,13 +10,22 @@
 			: new Array(2)
 	);
 
+	let isThrottled = false;
 	const handleStockClick = async (ticker: string) => {
+		if (isThrottled) return;
+		isThrottled = true;
+		try {
 			const selectedStock = data.tickerDetails.find((stock) => stock.ticker === ticker);
 			const nonSelectedStock = data.tickerDetails.find((stock) => stock.ticker !== ticker);
 
 			if (!selectedStock || !nonSelectedStock) throw new Error('Invalid ticker or stocks data');
 			await updateElo(selectedStock.ticker, nonSelectedStock.ticker);
 			await invalidateAll();
+		} catch (error) {
+			console.error(error);
+		} finally {
+			isThrottled = false;
+		}
 	};
 
 </script>
