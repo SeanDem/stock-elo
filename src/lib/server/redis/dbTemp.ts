@@ -6,7 +6,7 @@ export enum RankType {
 }
 
 export class TempDB {
-	static readonly TICKER_PREFIX = 'ticker:';
+	static readonly TICKER_PREFIX = 'compare:';
 	static readonly ELO_RANK = 'elo_rank';
 	static readonly MARKET_CAP_RANK = 'market_cap_rank';
 
@@ -99,7 +99,7 @@ export class TempDB {
 
 			return Math.max(eloCount, marketCapCount); // Return the maximum count from both sorted sets
 		} catch (error) {
-			console.error('Failed to get total tickers:', error);
+			console.error('Failed to get total compare:', error);
 			throw error;
 		}
 	}

@@ -1,4 +1,4 @@
-import { POLYGON_API_KEY } from '$lib/env/polygon';
+import { POLYGON_API_KEY } from '$lib/server/env/polygon';
 
 interface Address {
 	address1: string;
@@ -50,7 +50,7 @@ export async function fetchTickerDetails(ticker: string = 'AAPL'): Promise<Ticke
 
 	const response = await fetch(url);
 	if (!response.ok) {
-		console.error('Failed to fetch ticker details:', response.status, response.statusText);
+		console.error('Failed to fetch compare details:', response.status, response.statusText);
 		return null;
 	}
 	const data: TickerResponse = await response.json();

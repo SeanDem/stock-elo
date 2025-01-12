@@ -54,7 +54,7 @@ async function fetchTickerDetails(ticker) {
 
 async function seedDatabase(dryRun = true) {
 	try {
-		console.log('Fetching list of tickers...');
+		console.log('Fetching list of compare...');
 		const tickers = await fetchTickers();
 		console.log(`Fetched ${tickers.length} tickers.`);
 
@@ -64,7 +64,7 @@ async function seedDatabase(dryRun = true) {
 			console.log('Redis database cleared.');
 		}
 
-		console.log('Processing tickers...');
+		console.log('Processing compare...');
 		const pipeline = redis.pipeline();
 
 		for (const ticker_data of tickers) {

@@ -1,20 +1,23 @@
 <script>
 	import '../app.css';
 	import { onMount } from 'svelte';
-	import { inject } from '@vercel/analytics';
 	import { themeStore } from '$lib/store/theme';
 	import ThemeDropdown from '$lib/components/theme/ThemeDropdown.svelte';
+	import { injectSpeedInsights } from '@vercel/speed-insights';
+	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 
 	onMount(() => {
-		inject();
+		injectAnalytics();
+		injectSpeedInsights()
 	});
+	
 </script>
 
 <div
-	data-theme={$themeStore}
 	class="min-h-screen pt-20
 	flex justify-center
 	bg-gradient-to-r from-primary to-secondary"
+	data-theme={$themeStore}
 >
 	<ThemeDropdown />
 	<slot />

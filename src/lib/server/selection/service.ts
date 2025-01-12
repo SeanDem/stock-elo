@@ -22,8 +22,7 @@ export class TickerSelectionService {
 	}
 
 	async getTwoTickers(): Promise<string[]> {
-		const ticker1 = await this.pickTicker();
-		const ticker2 = await this.pickTicker();
+		const [ticker1, ticker2] = await Promise.all([this.pickTicker(), this.pickTicker()]);
 		if (ticker1 === ticker2) {
 			return await this.getTwoTickers();
 		}
@@ -31,16 +30,16 @@ export class TickerSelectionService {
 	}
 
 	private getTwoRandomTickers() {
-		//get two random tickers
+		//get two random compare
 	}
 	private getTwoTrendingTickers() {
-		//get two trending tickers
+		//get two trending compare
 	}
 	private getTwoEloTickers() {
-		//get two elo tickers with similar elo
+		//get two elo compare with similar elo
 	}
 	private getTwoMarketCapTickers() {
-		//get two market cap tickers with similar market cap
+		//get two market cap compare with similar market cap
 	}
 }
 

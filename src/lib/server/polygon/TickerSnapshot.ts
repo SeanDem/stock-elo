@@ -1,4 +1,4 @@
-import { POLYGON_API_KEY } from '$lib/env/polygon';
+import { POLYGON_API_KEY } from '$lib/server/env/polygon';
 
 interface Aggregate {
 	o: number;

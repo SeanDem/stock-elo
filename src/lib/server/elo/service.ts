@@ -23,7 +23,7 @@ class EloService {
 			]);
 
 			if (winnerELO === null || loserELO === null) {
-				console.error('ELO not found for one or both tickers');
+				console.error('ELO not found for one or both compare');
 			}
 
 			const expectedWinner = this.getExpected(winnerELO, loserELO);

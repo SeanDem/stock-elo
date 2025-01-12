@@ -1,2 +1,2 @@
-export * from	"./StockCard.svelte"
-export * from "./StockCardTypes"
+export * from './StockCard.svelte';
+export * from './stock-card.types';
