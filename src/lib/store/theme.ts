@@ -37,7 +37,7 @@ export enum Theme {
 }
 
 const KEY = 'theme';
-const defaultTheme = Theme.Light;
+const defaultTheme = Theme.Dark;
 export const themeStore = writable(defaultTheme);
 
 if (browser) {

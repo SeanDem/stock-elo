@@ -4,12 +4,12 @@
 	import { themeStore } from '$lib/store/theme';
 	import { injectSpeedInsights } from '@vercel/speed-insights';
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
+	import ThemeDropdown from '$lib/components/theme/ThemeDropdown.svelte';
 
 	onMount(() => {
 		injectAnalytics();
-		injectSpeedInsights()
+		injectSpeedInsights();
 	});
-
 </script>
 
 <div
@@ -18,6 +18,6 @@
 	bg-gradient-to-r from-primary to-secondary"
 	data-theme={$themeStore}
 >
-<!--	<ThemeDropdown /> //TODO future feature-->
+	<!--	<ThemeDropdown />-->
 	<slot />
 </div>

@@ -2,11 +2,12 @@ import { POLYGON_API_KEY } from '$lib/server/env';
 import { error } from '@sveltejs/kit';
 import { fetchTickerDetails } from '$lib/server/polygon/TickerDetails';
 
-export async function GET({ url, fetch }: { url: URL; fetch: typeof globalThis.fetch }) {
+export async function GET({ url, fetch }) {
 	const ticker = url.searchParams.get('ticker');
 	if (!ticker) {
 		throw error(400, 'Ticker parameter is required');
 	}
+	const defaultImage = `https://placehold.co/600x600/808080/000000.png?text=${ticker}`;
 
 	try {
 		const tickerDetails = await fetchTickerDetails(ticker);
@@ -14,26 +15,30 @@ export async function GET({ url, fetch }: { url: URL; fetch: typeof globalThis.f
 			throw error(404, `Ticker not found: ${ticker}`);
 		}
 		const logoUrl = tickerDetails.branding?.icon_url || tickerDetails.branding?.logo_url;
+		let imageResponse;
 
-		if (!logoUrl) {
-			throw error(404, `Logo not found for ticker: ${ticker}`);
+		if (logoUrl) {
+			imageResponse = await fetch(`${logoUrl}?apiKey=${POLYGON_API_KEY}`);
+			if (!imageResponse.ok) {
+				console.error(
+					imageResponse.status,
+					`Failed to fetch logo image: ${imageResponse.statusText}`
+				);
+				imageResponse = await fetch(defaultImage);
+			}
+		} else {
+			imageResponse = await fetch(defaultImage);
 		}
 
-		const imageResponse = await fetch(`${logoUrl}?apiKey=${POLYGON_API_KEY}`);
-		if (!imageResponse.ok) {
-			console.error(
-				imageResponse.status,
-				`Failed to fetch logo image: ${imageResponse.statusText}`
-			);
-		}
-
-		return new Response(imageResponse.body, {
+		const imageBuffer = await imageResponse.arrayBuffer();
+		return new Response(imageBuffer, {
 			headers: {
 				'Content-Type': imageResponse.headers.get('Content-Type') || 'image/png',
 				'Cache-Control': 'public, max-age=36000'
 			}
 		});
-	} catch (error) {
-		console.error(500, `An error occurred: ${error}`);
+	} catch (err) {
+		console.error(`An error occurred: ${err}`);
+		throw error(500, 'Internal Server Error');
 	}
 }

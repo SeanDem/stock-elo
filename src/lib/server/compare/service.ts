@@ -12,8 +12,8 @@ class CompareService {
 		const tickers = await TICKER_SELECTION_SERVICE.getTwoTickers();
 		for (const ticker of tickers) {
 			const [tickerData, tickerSnapshot, elo] = await Promise.all([
-				fetchTickerDetails(ticker),
-				fetchTickerSnapshot(ticker),
+				fetchTickerDetails(ticker), //TODO convert to service
+				fetchTickerSnapshot(ticker), //TODO convert to service
 				ELO_SERVICE.getElo(ticker)
 			]);
 			if (tickerData && tickerSnapshot) {
