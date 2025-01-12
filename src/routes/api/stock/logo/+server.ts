@@ -30,7 +30,7 @@ export async function GET({ url, fetch }: { url: URL; fetch: typeof globalThis.f
 		return new Response(imageResponse.body, {
 			headers: {
 				'Content-Type': imageResponse.headers.get('Content-Type') || 'image/png',
-				'Cache-Control': 'public, max-age=3600'
+				'Cache-Control': 'public, max-age=36000'
 			}
 		});
 	} catch (error) {
