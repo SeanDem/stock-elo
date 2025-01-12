@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Theme, themeStore } from '$lib/store/theme';
+	import { Theme, themeStore } from '$lib/client/store/theme';
 
 	let themes = Object.values(Theme);
 

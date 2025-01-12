@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Format } from '$lib/utils/format';
-	import type { StockCardProps } from '$lib/components/cards/stock-card.types';
-	import { stockCardSkeleton } from '$lib/components/cards/skeleton';
+	import { Format } from '$lib/client/utils/format';
+	import type { StockCardProps } from '$lib/client/components/cards/stock-card.types';
+	import { stockCardSkeleton } from '$lib/client/components/cards/skeleton';
 
 	export let stock: StockCardProps = stockCardSkeleton;
 	export let onClick: (symbol: string) => void;

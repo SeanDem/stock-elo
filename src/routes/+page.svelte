@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { updateElo } from '$lib';
 	import { invalidateAll } from '$app/navigation';
-	import StockCard from '$lib/components/cards/stock-card.svelte';
+	import StockCard from '$lib/client/components/cards/stock-card.svelte';
 
 	let { data } = $props();
 

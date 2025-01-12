@@ -1,10 +1,10 @@
 <script>
 	import '../app.css';
 	import { onMount } from 'svelte';
-	import { themeStore } from '$lib/store/theme';
+	import { themeStore } from '$lib/client/store/theme';
 	import { injectSpeedInsights } from '@vercel/speed-insights';
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
-	import ThemeDropdown from '$lib/components/theme/ThemeDropdown.svelte';
+	import ThemeDropdown from '$lib/client/components/theme/ThemeDropdown.svelte';
 
 	onMount(() => {
 		injectAnalytics();

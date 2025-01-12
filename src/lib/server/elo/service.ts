@@ -1,7 +1,7 @@
 import { TEMP_DB } from '$lib/server/redis/dbTemp';
 
 class EloService {
-	private readonly K_FACTOR = 15;
+	private readonly K_FACTOR = 5; // How much ELO to change after a match
 
 	async getElo(ticker: string): Promise<number | null> {
 		return await TEMP_DB.getStockELO(ticker);
