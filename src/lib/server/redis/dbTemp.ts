@@ -8,11 +8,12 @@ export enum RankType {
 export class TempDB {
 	async getStockELO(ticker: string): Promise<number> {
 		try {
-			const score = await redis.zscore(RankType.ELO, ticker);
+			const score: number | string | null = await redis.zscore(RankType.ELO, ticker);
 			if (score === null) {
 				console.error(`ELO not found for ticker: ${ticker}`);
 				return 1500;
 			}
+			if (typeof score == 'string') return Number(score);
 			return score;
 		} catch (error) {
 			console.error(`Failed to get ELO for ticker ${ticker}:`, error);
@@ -28,6 +29,8 @@ export class TempDB {
 	): Promise<void> {
 		try {
 			const pipeline = redis.pipeline();
+			newWinnerELO = Number(newWinnerELO.toFixed(4));
+			newLoserELO = Number(newLoserELO.toFixed(4));
 
 			pipeline.zadd(RankType.ELO, { score: newWinnerELO, member: winnerSymbol });
 			pipeline.zadd(RankType.ELO, { score: newLoserELO, member: loserSymbol });

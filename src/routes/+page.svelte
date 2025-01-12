@@ -25,8 +25,10 @@
 
 </script>
 
-<div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
-	{#each data.tickerComp as ticker}
-		<StockCard stock={ticker} onClick={handleStockClick} />
-	{/each}
+<div>
+	<div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 content-center">
+		{#each data.tickerComp as ticker}
+			<StockCard stock={ticker} onClick={handleStockClick} />
+		{/each}
+	</div>
 </div>

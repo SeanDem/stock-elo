@@ -13,8 +13,6 @@ class EloService {
 				TEMP_DB.getStockELO(winnerTicker),
 				TEMP_DB.getStockELO(loserTicker)
 			]);
-			console.log(`winnerELO type: ${winnerTicker}`, typeof winnerELO);
-			console.log(`loserELO type: ${loserTicker}`, typeof loserELO);
 
 			if (winnerELO === null || loserELO === null) {
 				console.error('ELO not found for one or both compare');

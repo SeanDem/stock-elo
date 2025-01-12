@@ -15,7 +15,7 @@ export function polygonDataToStockCardData(
 		description: tickerDetails.description || '',
 		homepageUrl: tickerDetails.homepage_url || '',
 		todaysChange: tickerSnapshot.todaysChange,
-		todaysChangePerc: tickerSnapshot.todaysChangePerc,
+		todaysChangePerc: tickerSnapshot.todaysChangePerc / 100,
 		volume: tickerSnapshot.day.v || tickerSnapshot.prevDay.v,
 		sector: tickerDetails.sic_description || ''
 	};
