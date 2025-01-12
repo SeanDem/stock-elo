@@ -4,6 +4,7 @@ import { fetchTickerSnapshot } from '$lib/server/polygon/TickerSnapshot';
 import type { TickerCompDetails } from '../../../routes/api/compare/contract';
 import { ELO_SERVICE } from '$lib/server/elo/service';
 import { polygonDataToStockCardData } from '$lib/server/compare/adapter';
+import { TEMP_DB } from '$lib/server/redis/dbTemp';
 
 class CompareService {
 	async getTwoCompareList(): Promise<TickerCompDetails[]> {
@@ -18,6 +19,9 @@ class CompareService {
 			if (tickerData && tickerSnapshot) {
 				const polygonData = polygonDataToStockCardData(tickerData, tickerSnapshot);
 				compareList.push({ ...polygonData, elo: elo ?? 0 });
+			}
+			if (tickerData?.market_cap) {
+				await TEMP_DB.updateMarketCapRank(ticker, tickerData?.market_cap);
 			}
 		}
 		return compareList;

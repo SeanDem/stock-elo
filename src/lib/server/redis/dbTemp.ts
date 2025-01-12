@@ -21,6 +21,15 @@ export class TempDB {
 		}
 	}
 
+	async updateMarketCapRank(ticker: string, marketCap: number): Promise<void> {
+		try {
+			await redis.zadd(RankType.MARKET_CAP, { score: marketCap, member: ticker });
+		} catch (error) {
+			console.error('Failed to update market cap rank:', error);
+			throw error;
+		}
+	}
+
 	async updateStocksELO(
 		winnerSymbol: string,
 		newWinnerELO: number,

@@ -22,7 +22,6 @@
 			isThrottled = false;
 		}
 	};
-
 </script>
 
 <div>

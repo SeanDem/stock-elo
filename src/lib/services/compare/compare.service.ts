@@ -1,4 +1,4 @@
-import type { TickerCompDetails } from '../../../routes/api/compare/contract';
+import type { TickerCompDetails } from '$lib';
 
 export async function fetchCompareList(
 	fetch: typeof globalThis.fetch
