@@ -9,7 +9,7 @@ export function polygonDataToStockCardData(
 	return {
 		name: tickerDetails.name,
 		ticker: tickerDetails.ticker,
-		logoUrl: `${tickerDetails.homepage_url}`,
+		logoUrl: `/api/stock/logo?ticker=${tickerDetails.ticker}`,
 		marketCap: tickerDetails.market_cap,
 		price: tickerSnapshot.day.c || tickerSnapshot.prevDay.c,
 		description: tickerDetails.description || '',

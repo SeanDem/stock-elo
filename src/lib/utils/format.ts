@@ -34,13 +34,19 @@ export class Format {
 	static marketCap(value: number): string {
 		switch (true) {
 			case value >= 1_000_000_000_000:
-				return `${(value / 1_000_000_000_000).toFixed(2)} Trillion`;
+				return `${(value / 1_000_000_000_000).toFixed(2)} T`;
 			case value >= 1_000_000_000:
-				return `${(value / 1_000_000_000).toFixed(2)} Billion`;
+				return `${(value / 1_000_000_000).toFixed(2)} B`;
 			case value >= 1_000_000:
-				return `${(value / 1_000_000).toFixed(2)} Million`;
+				return `${(value / 1_000_000).toFixed(2)} M`;
 			default:
 				return numberFormatter.format(value);
 		}
+	}
+	static maxChars(value: string, max: number): string {
+		if (value.length > max) {
+			return value.slice(0, max) + '...';
+		}
+		return value;
 	}
 }

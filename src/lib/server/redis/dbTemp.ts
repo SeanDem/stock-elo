@@ -1,59 +1,21 @@
 import redis from '$lib/server/redis/redis';
 
 export enum RankType {
-	ELO = 'elo',
-	MARKET_CAP = 'market_cap'
+	ELO = 'elo_rank',
+	MARKET_CAP = 'market_cap_rank'
 }
 
 export class TempDB {
-	static readonly TICKER_PREFIX = 'compare:';
-	static readonly ELO_RANK = 'elo_rank';
-	static readonly MARKET_CAP_RANK = 'market_cap_rank';
-
-	private static getTickerKey(symbol: string): string {
-		return `${this.TICKER_PREFIX}${symbol}`;
-	}
-
-	private static getRankKey(rankType: RankType): string {
-		return rankType === RankType.ELO ? this.ELO_RANK : this.MARKET_CAP_RANK;
-	}
-
-	async setStockData(ticker: string, elo: number, marketCap?: number): Promise<void> {
-		try {
-			const pipeline = redis.pipeline();
-
-			pipeline.hset(TempDB.getTickerKey(ticker), {
-				[RankType.ELO]: elo,
-				[RankType.MARKET_CAP]: marketCap ?? 0
-			});
-			pipeline.zadd(TempDB.ELO_RANK, { score: elo, member: ticker });
-			if (marketCap !== undefined) {
-				pipeline.zadd(TempDB.MARKET_CAP_RANK, { score: marketCap, member: ticker });
-			}
-
-			await pipeline.exec();
-		} catch (error) {
-			console.error('Failed to set stock data:', error);
-			throw error;
-		}
-	}
-
 	async getStockELO(ticker: string): Promise<number> {
 		try {
-			const data = await redis.hget<number>(TempDB.getTickerKey(ticker), RankType.ELO);
-			return data ?? 1500; // Default ELO if not found
+			const score = await redis.zscore(RankType.ELO, ticker);
+			if (score === null) {
+				console.error(`ELO not found for ticker: ${ticker}`);
+				return 1500;
+			}
+			return score;
 		} catch (error) {
 			console.error(`Failed to get ELO for ticker ${ticker}:`, error);
-			throw error;
-		}
-	}
-
-	async getStockMarketCap(ticker: string): Promise<number | null> {
-		try {
-			const data = await redis.hget<number>(TempDB.getTickerKey(ticker), RankType.MARKET_CAP);
-			return data ?? null;
-		} catch (error) {
-			console.error(`Failed to get market cap for ticker ${ticker}:`, error);
 			throw error;
 		}
 	}
@@ -67,8 +29,8 @@ export class TempDB {
 		try {
 			const pipeline = redis.pipeline();
 
-			pipeline.zadd(TempDB.ELO_RANK, { score: newWinnerELO, member: winnerSymbol });
-			pipeline.zadd(TempDB.ELO_RANK, { score: newLoserELO, member: loserSymbol });
+			pipeline.zadd(RankType.ELO, { score: newWinnerELO, member: winnerSymbol });
+			pipeline.zadd(RankType.ELO, { score: newLoserELO, member: loserSymbol });
 
 			await pipeline.exec();
 		} catch (error) {
@@ -79,8 +41,7 @@ export class TempDB {
 
 	async getTickerByRank(rankType: RankType, rank: number): Promise<string> {
 		try {
-			const rankKey = TempDB.getRankKey(rankType);
-			const result = (await redis.zrange(rankKey, rank, rank)) as string[];
+			const result = (await redis.zrange(rankType, rank, rank)) as string[];
 			if (result.length === 0) {
 				console.error(`Failed to get ticker by rank for ${rankType} at rank ${rank}`);
 				return '';
@@ -94,10 +55,10 @@ export class TempDB {
 
 	async getTotalTickers(): Promise<number> {
 		try {
-			const eloCount = await redis.zcard(TempDB.ELO_RANK);
-			const marketCapCount = await redis.zcard(TempDB.MARKET_CAP_RANK);
+			const eloCount = await redis.zcard(RankType.ELO);
+			const marketCapCount = await redis.zcard(RankType.MARKET_CAP);
 
-			return Math.max(eloCount, marketCapCount); // Return the maximum count from both sorted sets
+			return Math.max(eloCount, marketCapCount);
 		} catch (error) {
 			console.error('Failed to get total compare:', error);
 			throw error;

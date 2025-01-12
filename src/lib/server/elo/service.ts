@@ -3,14 +3,6 @@ import { TEMP_DB } from '$lib/server/redis/dbTemp';
 class EloService {
 	private readonly K_FACTOR = 15;
 
-	private getExpected(playerELO: number, opponentELO: number): number {
-		return 1 / (1 + 10 ** ((opponentELO - playerELO) / 400));
-	}
-
-	private calcElo(currentELO: number, expectedScore: number, actualScore: number): number {
-		return currentELO + this.K_FACTOR * (actualScore - expectedScore);
-	}
-
 	async getElo(ticker: string): Promise<number | null> {
 		return await TEMP_DB.getStockELO(ticker);
 	}
@@ -21,6 +13,8 @@ class EloService {
 				TEMP_DB.getStockELO(winnerTicker),
 				TEMP_DB.getStockELO(loserTicker)
 			]);
+			console.log(`winnerELO type: ${winnerTicker}`, typeof winnerELO);
+			console.log(`loserELO type: ${loserTicker}`, typeof loserELO);
 
 			if (winnerELO === null || loserELO === null) {
 				console.error('ELO not found for one or both compare');
@@ -36,6 +30,14 @@ class EloService {
 		} catch (error) {
 			console.error(error);
 		}
+	}
+
+	private getExpected(playerELO: number, opponentELO: number): number {
+		return 1 / (1 + 10 ** ((opponentELO - playerELO) / 400));
+	}
+
+	private calcElo(currentELO: number, expectedScore: number, actualScore: number): number {
+		return currentELO + this.K_FACTOR * (actualScore - expectedScore);
 	}
 }
 
