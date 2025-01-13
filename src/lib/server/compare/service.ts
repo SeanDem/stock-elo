@@ -1,6 +1,6 @@
 import { TICKER_SELECTION_SERVICE } from '$lib/server/selection/service';
-import { fetchTickerDetails } from '$lib/server/polygon/TickerDetails';
-import { fetchTickerSnapshot } from '$lib/server/polygon/TickerSnapshot';
+import { fetchTickerDetails } from '$lib/server/polygon/ticker-details';
+import { fetchTickerSnapshot } from '$lib/server/polygon/ticker-snapshot';
 import type { TickerCompDetails } from '../../../routes/api/compare/contract';
 import { ELO_SERVICE } from '$lib/server/elo/service';
 import { polygonDataToStockCardData } from '$lib/server/compare/adapter';

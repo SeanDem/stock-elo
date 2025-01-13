@@ -1,6 +1,6 @@
 import type { TickerCompDetails } from '$lib';
-import type { TickerDetails } from '$lib/server/polygon/TickerDetails';
-import type { TickerSnapshot } from '$lib/server/polygon/TickerSnapshot';
+import type { TickerDetails } from '$lib/server/polygon/ticker-details';
+import type { TickerSnapshot } from '$lib/server/polygon/ticker-snapshot';
 import { STOCK_NAME_CLEANER } from '$lib/server/clean-text/stock-name';
 
 export function polygonDataToStockCardData(

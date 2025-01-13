@@ -28,6 +28,7 @@ interface SnapshotResponse {
 }
 
 export async function fetchTickerSnapshot(ticker: string): Promise<TickerSnapshot | null> {
+	console.log('Fetching ticker snapshot for', ticker);
 	const url = `https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers/${ticker}?apiKey=${POLYGON_API_KEY}`;
 	const maxRetries = 10;
 	const retryDelay = 10;
@@ -43,6 +44,8 @@ export async function fetchTickerSnapshot(ticker: string): Promise<TickerSnapsho
 			return null;
 		}
 		const data: SnapshotResponse = await response.json();
+		console.log('Successfully fetched ticker snapshot for', ticker);
+		console.log(JSON.stringify(data.ticker));
 		return data.ticker;
 		// retry if failed
 		// await new Promise((resolve) => setTimeout(resolve, retryDelay));

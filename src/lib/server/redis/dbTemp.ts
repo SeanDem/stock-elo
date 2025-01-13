@@ -51,7 +51,7 @@ export class TempDB {
 		}
 	}
 
-	async getTickerByRank(rankType: RankType, rank: number): Promise<string> {
+	async getTickerByIndex(rankType: RankType, rank: number): Promise<string> {
 		try {
 			const result = (await redis.zrange(rankType, rank, rank)) as string[];
 			if (result.length === 0) {

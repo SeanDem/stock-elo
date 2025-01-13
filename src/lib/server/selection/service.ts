@@ -13,7 +13,7 @@ export class TickerSelectionService {
 		const rand = Math.pow(Math.random(), this.TREND_POWER);
 		const index = Math.floor(rand * total);
 
-		return TEMP_DB.getTickerByRank(rankType, index);
+		return TEMP_DB.getTickerByIndex(rankType, index);
 	}
 
 	private async pickTicker(): Promise<string> {
@@ -22,16 +22,26 @@ export class TickerSelectionService {
 	}
 
 	async getTwoTickers(): Promise<string[]> {
-		const [ticker1, ticker2] = await Promise.all([this.pickTicker(), this.pickTicker()]);
-		if (ticker1 === ticker2) {
-			return await this.getTwoTickers();
+		return await this.getTwoRandomTickers();
+	}
+
+	async getTwoRandomTickers(): Promise<string[]> {
+		const total = await TEMP_DB.getTotalTickers();
+		const index1 = Math.floor(Math.random() * total);
+		let index2 = Math.floor(Math.random() * total);
+
+		while (index1 === index2) {
+			index2 = Math.floor(Math.random() * total);
 		}
+
+		const [ticker1, ticker2] = await Promise.all([
+			TEMP_DB.getTickerByIndex(RankType.ELO, index1),
+			TEMP_DB.getTickerByIndex(RankType.ELO, index2)
+		]);
+
 		return [ticker1, ticker2];
 	}
 
-	private getTwoRandomTickers() {
-		//get two random compare
-	}
 	private getTwoTrendingTickers() {
 		//get two trending compare
 	}

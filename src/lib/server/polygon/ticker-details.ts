@@ -46,6 +46,7 @@ interface TickerResponse {
 }
 
 export async function fetchTickerDetails(ticker: string = 'AAPL'): Promise<TickerDetails | null> {
+	console.log('Fetching ticker details for', ticker);
 	const url = `https://api.polygon.io/v3/reference/tickers/${ticker}?apiKey=${POLYGON_API_KEY}`;
 
 	const response = await fetch(url);
@@ -54,5 +55,7 @@ export async function fetchTickerDetails(ticker: string = 'AAPL'): Promise<Ticke
 		return null;
 	}
 	const data: TickerResponse = await response.json();
+	console.log('Successfully fetched ticker details for', ticker);
+	console.log(JSON.stringify(data.results));
 	return data.results;
 }
