@@ -9,7 +9,7 @@ import { TEMP_DB } from '$lib/server/redis/dbTemp';
 class CompareService {
 	async getTwoCompareList(): Promise<TickerCompDetails[]> {
 		const compareList: TickerCompDetails[] = [];
-		const tickers = await TICKER_SELECTION_SERVICE.getTwoTickers();
+		const tickers = await TICKER_SELECTION_SERVICE.getTwoTickers(); //get two random tickers
 		for (const ticker of tickers) {
 			const [tickerData, tickerSnapshot, elo] = await Promise.all([
 				fetchTickerDetails(ticker), //TODO convert to service

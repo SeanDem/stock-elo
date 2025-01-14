@@ -12,5 +12,6 @@ export interface TickerCompDetails {
 	volume: number;
 	sector: string;
 	peRatio?: number;
+	industry?: string;
 	dividendYield?: number;
 }

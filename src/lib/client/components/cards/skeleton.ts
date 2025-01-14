@@ -12,5 +12,6 @@ export const stockCardSkeleton: StockCardProps = {
 	ticker: '',
 	todaysChange: 0,
 	todaysChangePerc: 0,
-	volume: 0
+	volume: 0,
+	industry: ''
 };

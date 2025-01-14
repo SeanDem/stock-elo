@@ -1,8 +1,3 @@
-const currencyFormatter = new Intl.NumberFormat('en-US', {
-	style: 'currency',
-	currency: 'USD'
-});
-
 const percentageFormatter = new Intl.NumberFormat('en-US', {
 	style: 'percent',
 	minimumFractionDigits: 2,
@@ -14,7 +9,13 @@ const numberFormatter = new Intl.NumberFormat('en-US', {
 });
 
 export class Format {
-	static currency(value: number): string {
+	static currency(value: number, decimals: number = 2): string {
+		const currencyFormatter = new Intl.NumberFormat('en-US', {
+			style: 'currency',
+			currency: 'USD',
+			minimumFractionDigits: decimals,
+			maximumFractionDigits: decimals
+		});
 		return currencyFormatter.format(value);
 	}
 

@@ -27,10 +27,13 @@
 		<div class="flex items-start h-32">
 			<img alt={stock.ticker} class="h-32 w-auto max-w-40 object-contain" src={stock.logoUrl} />
 			<div class="w-2/3 ml-4 overflow-hidden">
-				<h2 class="card-title text-xl font-semibold truncate">
+				<h2 class="card-title text-xl font-semibold truncate ml-1">
 					{stock.ticker}
 				</h2>
-				<p class="text-base-content/70 line-clamp-3">
+				{#if stock.industry}
+					<div class="badge badge-primary text-sm">{stock.industry}</div>
+				{/if}
+				<p class="text-base-content/70 line-clamp-3 ml-1">
 					{stock.name}
 				</p>
 			</div>
@@ -47,8 +50,8 @@
 				</p>
 				{#if stock.volume}
 					<p class="text-base-content">
-						<span class="font-semibold">Volume:</span>
-						{Format.currency(stock.volume)}
+						<span class="font-semibold">Volume (24h):</span>
+						{Format.currency(stock.volume, 0)}
 					</p>
 				{/if}
 				{#if stock.todaysChangePerc}
