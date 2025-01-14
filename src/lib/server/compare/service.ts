@@ -8,23 +8,40 @@ import { TEMP_DB } from '$lib/server/redis/dbTemp';
 
 class CompareService {
 	async getTwoCompareList(): Promise<TickerCompDetails[]> {
-		const compareList: TickerCompDetails[] = [];
-		const tickers = await TICKER_SELECTION_SERVICE.getTwoTickers(); //get two random tickers
-		for (const ticker of tickers) {
+		try {
+			const tickers = await TICKER_SELECTION_SERVICE.getTwoTickers();
+			const compareList = await Promise.all(tickers.map((ticker) => this.processTicker(ticker)));
+			return compareList.filter(Boolean) as TickerCompDetails[];
+		} catch (error) {
+			console.error('Error fetching compare list:', error);
+			return [];
+		}
+	}
+
+	private async processTicker(ticker: string): Promise<TickerCompDetails | null> {
+		try {
 			const [tickerData, tickerSnapshot, elo] = await Promise.all([
-				fetchTickerDetails(ticker), //TODO convert to service
-				fetchTickerSnapshot(ticker), //TODO convert to service
+				fetchTickerDetails(ticker),
+				fetchTickerSnapshot(ticker),
 				ELO_SERVICE.getElo(ticker)
 			]);
-			if (tickerData && tickerSnapshot) {
-				const polygonData = polygonDataToStockCardData(tickerData, tickerSnapshot);
-				compareList.push({ ...polygonData, elo: elo ?? 0 });
+
+			if (!tickerData || !tickerSnapshot) return null;
+
+			const polygonData = polygonDataToStockCardData(tickerData, tickerSnapshot);
+			polygonData.elo = elo ?? 0;
+
+			if (tickerData.market_cap) {
+				await TEMP_DB.updateMarketCapRank(ticker, tickerData.market_cap);
 			}
-			if (tickerData?.market_cap) {
-				await TEMP_DB.updateMarketCapRank(ticker, tickerData?.market_cap);
-			}
+
+			console.log(`Ticker details: ${ticker}:`, polygonData);
+			return polygonData;
+		} catch (error) {
+			console.error(`Error processing ticker ${ticker}:`, error);
+			return null;
 		}
-		return compareList;
 	}
 }
+
 export const COMPARE_SERVICE = new CompareService();

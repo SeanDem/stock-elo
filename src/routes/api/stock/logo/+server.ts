@@ -14,7 +14,7 @@ export async function GET({ url, fetch }) {
 		if (!tickerDetails) {
 			throw error(404, `Ticker not found: ${ticker}`);
 		}
-		const logoUrl = tickerDetails.branding?.logo_url || tickerDetails.branding?.icon_url;
+		const logoUrl = tickerDetails.branding?.icon_url || tickerDetails.branding?.logo_url;
 		let imageResponse;
 
 		if (logoUrl) {

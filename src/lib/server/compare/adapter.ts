@@ -1,13 +1,14 @@
-import type { TickerCompDetails } from '$lib';
 import type { TickerDetails } from '$lib/server/polygon/ticker-details';
 import type { TickerSnapshot } from '$lib/server/polygon/ticker-snapshot';
 import { STOCK_NAME_CLEANER } from '$lib/server/adapt-text/stock-name';
+import type { TickerCompDetails } from '../../../routes/api/compare/contract';
 
 export function polygonDataToStockCardData(
 	tickerDetails: TickerDetails,
 	tickerSnapshot: TickerSnapshot
-): Omit<TickerCompDetails, 'elo'> {
+): TickerCompDetails {
 	return {
+		elo: 0,
 		name: STOCK_NAME_CLEANER.adapt(tickerDetails.name),
 		ticker: tickerDetails.ticker,
 		logoUrl: `/api/stock/logo?ticker=${tickerDetails.ticker}`,
