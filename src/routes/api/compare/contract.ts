@@ -1,5 +1,6 @@
 export interface TickerCompDetails {
 	elo: number;
+	eloRank?: number;
 	description: string;
 	homepageUrl: string;
 	logoUrl: string;

@@ -6,7 +6,7 @@ export const NAV_ITEMS: NavItem[] = [
 		link: '/compare'
 	},
 	{
-		display: 'Rankings',
-		link: '/rankings'
+		display: 'Ranking',
+		link: '/ranking'
 	}
 ];

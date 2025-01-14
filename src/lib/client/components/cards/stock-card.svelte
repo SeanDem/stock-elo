@@ -25,7 +25,11 @@
 >
 	<div class="card-body gap-y-4">
 		<div class="flex items-start h-32">
-			<img alt={stock.ticker} class="h-32 w-auto max-w-40 object-contain" src={stock.logoUrl} />
+			<img
+				alt={stock.ticker}
+				class="h-32 w-auto max-w-40 rounded-lg border object-contain"
+				src={stock.logoUrl}
+			/>
 			<div class="w-2/3 ml-4 overflow-hidden">
 				<h2 class="card-title text-xl font-semibold truncate ml-1">
 					{stock.ticker}

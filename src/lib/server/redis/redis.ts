@@ -1,5 +1,5 @@
 import { Redis } from '@upstash/redis';
-import { UPSTASH_API_KEY, UPSTASH_API_URL } from '$lib/server/env';
+import { UPSTASH_API_KEY, UPSTASH_API_URL } from '$lib/server/env/upstash';
 
 const redis = new Redis({
 	url: UPSTASH_API_URL,

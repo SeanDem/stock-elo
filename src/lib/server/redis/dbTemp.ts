@@ -76,6 +76,23 @@ export class TempDB {
 			throw error;
 		}
 	}
+	async getStockList(
+		rankType: RankType = RankType.ELO,
+		limit: number = 100,
+		offset: number = 0,
+		ascending: boolean = false
+	): Promise<string[]> {
+		try {
+			const stocks = (await redis.zrange(rankType, offset, offset + limit - 1, {
+				rev: !ascending,
+				withScores: true
+			})) as string[];
+			return stocks;
+		} catch (error) {
+			console.error('Failed to get stocks by ELO:', error);
+			throw error;
+		}
+	}
 }
 
 export const TEMP_DB = new TempDB();

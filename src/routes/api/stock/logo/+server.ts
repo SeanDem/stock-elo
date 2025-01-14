@@ -1,6 +1,6 @@
-import { POLYGON_API_KEY } from '$lib/server/env';
 import { error } from '@sveltejs/kit';
 import { fetchTickerDetails } from '$lib/server/polygon/ticker-details';
+import { POLYGON_API_KEY } from '$lib/server/env/polygon';
 
 export async function GET({ url, fetch }) {
 	const ticker = url.searchParams.get('ticker');

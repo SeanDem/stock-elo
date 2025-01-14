@@ -28,8 +28,9 @@ export class Format {
 		return numberFormatter.format(value);
 	}
 
-	static round(value: number | undefined, decimals: number = 0): string {
+	static round(value: number | string | undefined, decimals: number = 0): string {
 		if (!value) return '';
+		if (typeof value === 'string') value = parseFloat(value);
 		return numberFormatter.format(Number(value.toFixed(decimals)));
 	}
 
