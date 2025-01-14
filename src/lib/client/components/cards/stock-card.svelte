@@ -27,7 +27,7 @@
 		<div class="flex items-start h-32">
 			<img
 				alt={stock.ticker}
-				class="h-32 w-auto max-w-40 rounded-lg border object-contain"
+				class="h-32 w-32 rounded-lg border object-contain"
 				src={stock.logoUrl}
 			/>
 			<div class="w-2/3 ml-4 overflow-hidden">

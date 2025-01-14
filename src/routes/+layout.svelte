@@ -5,7 +5,6 @@
 	import { injectSpeedInsights } from '@vercel/speed-insights';
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 	import NavBar from '$lib/client/components/navbar/nav-bar.svelte';
-	import ThemeDropdown from '$lib/client/components/theme/ThemeDropdown.svelte';
 	onMount(() => {
 		injectAnalytics();
 		injectSpeedInsights();

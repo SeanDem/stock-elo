@@ -37,12 +37,12 @@ export enum Theme {
 }
 
 const KEY = 'theme';
-const defaultTheme = Theme.Dark;
+const defaultTheme = Theme.Light;
 export const themeStore = writable(defaultTheme);
 
 if (browser) {
-	const initialValue = localStorage.getItem(KEY) ? localStorage.getItem(KEY) : defaultTheme;
-	themeStore.set(initialValue as Theme);
+	// const initialValue = localStorage.getItem(KEY) ? localStorage.getItem(KEY) : defaultTheme;
+	themeStore.set(defaultTheme as Theme);
 
 	themeStore.subscribe((value) => {
 		localStorage.setItem(KEY, value);
