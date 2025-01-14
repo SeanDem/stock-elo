@@ -1,9 +1,6 @@
 import type { TickerCompDetails } from './api/compare/contract';
+import { redirect } from '@sveltejs/kit';
 
-export const load = async ({ fetch }): Promise<{ tickerComp: TickerCompDetails[] }> => {
-	const response = await fetch('/api/compare');
-	if (!response.ok) {
-		throw new Error('Failed to fetch compare data');
-	}
-	return await response.json();
+export const load = async (): Promise<{ tickerComp: TickerCompDetails[] }> => {
+	throw redirect(302, '/compare');
 };

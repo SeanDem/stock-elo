@@ -1,5 +1,34 @@
 <script lang="ts">
+	import { updateElo } from '$lib';
+	import { invalidateAll } from '$app/navigation';
+	import StockCard from '$lib/client/components/cards/stock-card.svelte';
+	import { themeStore } from '$lib/client/store/theme';
+
 	let { data } = $props();
 
+	let isThrottled = false;
+	const handleStockClick = async (ticker: string) => {
+		if (isThrottled) return;
+		isThrottled = true;
+		try {
+			const selectedStock = data.tickerComp.find((stock) => stock.ticker === ticker);
+			const nonSelectedStock = data.tickerComp.find((stock) => stock.ticker !== ticker);
+
+			if (!selectedStock || !nonSelectedStock) throw new Error('Invalid compare or stocks data');
+			await updateElo(selectedStock.ticker, nonSelectedStock.ticker);
+			await invalidateAll();
+		} catch (error) {
+			console.error(error);
+		} finally {
+			isThrottled = false;
+		}
+	};
 </script>
-<div>{ JSON.stringify(data) }</div>
+
+<div class="flex justify-center items-center">
+	<div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 content-center">
+		{#each data.tickerComp as ticker}
+			<StockCard stock={ticker} onClick={handleStockClick} />
+		{/each}
+	</div>
+</div>

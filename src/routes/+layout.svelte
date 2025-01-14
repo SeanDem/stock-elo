@@ -4,8 +4,8 @@
 	import { themeStore } from '$lib/client/store/theme';
 	import { injectSpeedInsights } from '@vercel/speed-insights';
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
+	import NavBar from '$lib/client/components/navbar/nav-bar.svelte';
 	import ThemeDropdown from '$lib/client/components/theme/ThemeDropdown.svelte';
-
 	onMount(() => {
 		injectAnalytics();
 		injectSpeedInsights();
@@ -13,11 +13,11 @@
 </script>
 
 <div
-	class="min-h-screen pt-20
-	flex justify-center
+	class="min-h-screen
 	bg-gradient-to-r from-primary to-secondary"
 	data-theme={$themeStore}
 >
 	<!--	<ThemeDropdown />-->
+	<NavBar />
 	<slot />
 </div>
