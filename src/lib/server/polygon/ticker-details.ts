@@ -56,6 +56,5 @@ export async function fetchTickerDetails(ticker: string = 'AAPL'): Promise<Ticke
 	}
 	const data: TickerResponse = await response.json();
 	console.log('Successfully fetched ticker details for', ticker);
-	console.log(JSON.stringify(data.results));
 	return data.results;
 }

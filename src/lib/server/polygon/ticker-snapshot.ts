@@ -45,7 +45,6 @@ export async function fetchTickerSnapshot(ticker: string): Promise<TickerSnapsho
 		}
 		const data: SnapshotResponse = await response.json();
 		console.log('Successfully fetched ticker snapshot for', ticker);
-		console.log(JSON.stringify(data.ticker));
 		return data.ticker;
 		// retry if failed
 		// await new Promise((resolve) => setTimeout(resolve, retryDelay));

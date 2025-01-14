@@ -1,5 +1,6 @@
 const percentageFormatter = new Intl.NumberFormat('en-US', {
 	style: 'percent',
+	signDisplay: 'always',
 	minimumFractionDigits: 2,
 	maximumFractionDigits: 2
 });

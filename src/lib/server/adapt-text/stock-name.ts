@@ -21,7 +21,8 @@ const keyTerms = [
 	'limited liability company',
 	', inc.',
 	'inc',
-	', ltd.'
+	', ltd.',
+	'ltd'
 ];
 
 export class StockNameCleaner extends AdapterStrategy {
