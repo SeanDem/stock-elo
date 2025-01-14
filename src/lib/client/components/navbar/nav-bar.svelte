@@ -8,8 +8,10 @@
 	<ul class="menu menu-horizontal flex justify-center w-full">
 		{#each navItems as item}
 			<li>
-				<a class="text-3xl font-extrabold text-base-content" href={item.link || '#'}
-					>{item.display}</a
+				<a
+					class="text-3xl font-extrabold text-base-content"
+					href={item.link || '#'}
+					data-sveltekit-preload-data="hover">{item.display}</a
 				>
 			</li>
 		{/each}
