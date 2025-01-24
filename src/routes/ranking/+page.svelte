@@ -4,9 +4,9 @@
 	let { data } = $props();
 </script>
 
-<ul class="space-y-4 flex flex-col items-center">
+<ul class="space-y-3 flex flex-col items-center">
 	{#each data.tickerComp as stock}
-		<li class="bg-base-100 shadow-md rounded-lg p-4 w-80 hover:bg-base-200 transition">
+		<li class="bg-base-100 border shadow-lg rounded-lg p-4 w-80 hover:bg-base-200 transition">
 			<div class="flex items-center justify-between">
 				<div class="flex items-center">
 					<img

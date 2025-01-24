@@ -8,5 +8,9 @@ export const NAV_ITEMS: NavItem[] = [
 	{
 		display: 'Ranking',
 		link: '/ranking'
+	},
+	{
+		display: 'Theme',
+		link: '/theme'
 	}
 ];

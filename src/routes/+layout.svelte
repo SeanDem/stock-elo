@@ -11,12 +11,7 @@
 	});
 </script>
 
-<div
-	class="min-h-screen
-	bg-gradient-to-r from-primary to-secondary"
-	data-theme={$themeStore}
->
-	<!--	<ThemeDropdown />-->
+<div class="min-h-screen" data-theme={$themeStore}>
 	<NavBar />
 	<slot />
 </div>

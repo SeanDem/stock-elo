@@ -16,7 +16,7 @@
 
 <div
 	class="card w-96 h-72
-	bg-base-100 shadow-md border border-base-200
+	bg-base-100 shadow-xl border border-base-200
 	cursor-pointer hover:shadow-2xl"
 	on:click={() => onClick(stock.ticker)}
 	on:keydown={(e) => e.key === 'Enter' && onClick(stock.ticker)}

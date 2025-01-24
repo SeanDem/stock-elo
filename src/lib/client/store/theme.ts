@@ -2,38 +2,43 @@ import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
 
 export enum Theme {
+	// Light Background Themes
 	Light = 'light',
-	Dark = 'dark',
-	Cupcake = 'cupcake',
 	Bumblebee = 'bumblebee',
 	Emerald = 'emerald',
 	Corporate = 'corporate',
-	Synthwave = 'synthwave',
-	Retro = 'retro',
-	Cyberpunk = 'cyberpunk',
-	Valentine = 'valentine',
-	Halloween = 'halloween',
-	Garden = 'garden',
-	Forest = 'forest',
-	Aqua = 'aqua',
-	Lofi = 'lofi',
 	Pastel = 'pastel',
+	Winter = 'winter',
+	Lofi = 'lofi',
 	Fantasy = 'fantasy',
 	Wireframe = 'wireframe',
-	Black = 'black',
+	Cmyk = 'cmyk',
+	Acid = 'acid',
+	Nord = 'nord',
+
+	//Color Background Themes
+	Garden = 'garden',
+	Autumn = 'autumn',
+	Retro = 'retro',
+	Valentine = 'valentine',
+	Lemonade = 'lemonade',
+	Cupcake = 'cupcake',
+	Cyberpunk = 'cyberpunk',
+	Aqua = 'aqua',
+
+	// Dark Background Themes
+	Dark = 'dark',
+	Synthwave = 'synthwave',
+	Halloween = 'halloween',
+	Forest = 'forest',
 	Luxury = 'luxury',
 	Dracula = 'dracula',
-	Cmyk = 'cmyk',
-	Autumn = 'autumn',
 	Business = 'business',
-	Acid = 'acid',
-	Lemonade = 'lemonade',
 	Night = 'night',
 	Coffee = 'coffee',
-	Winter = 'winter',
 	Dim = 'dim',
-	Nord = 'nord',
-	Sunset = 'sunset'
+	Sunset = 'sunset',
+	Black = 'black'
 }
 
 const KEY = 'theme';
